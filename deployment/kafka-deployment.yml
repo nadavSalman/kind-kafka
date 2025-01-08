@@ -37,6 +37,17 @@ spec:
               value: '3'
             - name: DEFAULT_MIN_INSYNC_REPLICAS
               value: '2'
+            # Listener configuration
+            - name: KAFKA_LISTENERS
+              value: "INTERNAL://:9092,EXTERNAL://:30092"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "INTERNAL://$(HOSTNAME).kafka-svc.kafka.svc.cluster.local:9092,EXTERNAL://localhost:30092"
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT"
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: "INTERNAL"
+            - name: KAFKA_LOG_DIRS
+              value: "/mnt/kafka"
           volumeMounts:
             - name: data
               mountPath: /mnt/kafka
